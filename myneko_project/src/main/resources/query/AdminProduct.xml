@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myneko.admin.product.dao.ProductDAO">
+	<sql id="list">
+		select * from product
+		<choose>
+			<when test="p_name == ''">
+				<choose>
+					<when test="p_division == ''">
+					</when>
+					<when test="p_division != ''">
+						where p_division = #{p_division}
+					</when>
+				</choose>
+			</when>
+			<when test="p_name != '' and p_name != null and p_division ==''">
+				where p_name like '%'|| #{p_name} ||'%'
+			</when>
+			<when test="p_name != '' and p_name != null and p_division !=''">
+				where p_name like '%'|| #{p_name} ||'%' and
+				p_division = #{p_division}
+			</when>
+		</choose>
+		order by p_number desc
+	</sql>
+	<!-- 상품리스트 호출 -->
+	<select id="productList" resultType="pvo">
+		select * from (select list.*, rownum as rnum from (
+		<include refid="list"></include>
+		) list)
+		<where>
+			<if test="start_row != null and start_row != ''">
+				<if test="end_row != null and end_row != ''">
+					rnum between #{start_row} and #{end_row}
+				</if>
+			</if>
+		</where>
+	</select>
+
+	<!-- 상품정보 등록 -->
+	<insert id="insertProduct" parameterType="pvo">
+
+		<selectKey keyProperty="p_number" resultType="int"
+			order="BEFORE">
+			select product_seq.nextval from dual
+		</selectKey>
+
+		insert into
+		product
+		(p_number
+		,p_division
+		,p_name
+		,p_brand
+		,p_material
+		,p_usableage
+		,p_function
+		,p_size
+		,p_usablehair
+		,p_recchar
+		,p_price
+		,p_amount
+		,p_type
+		,p_volume
+		,p_color
+		,p_recgender
+		,p_rectaste
+		<if test="p_image != null and p_image != ''">
+			,p_image
+			,p_thumbnail
+		</if>
+		<if test="p_detailimage != null and p_detailimage != ''">
+			,p_detailimage
+		</if>
+		,p_searchkey
+		)
+		values
+		(
+		#{p_number}
+		,#{p_division}
+		,#{p_name}
+		,#{p_brand}
+		,#{p_material}
+		,#{p_usableage}
+		,#{p_function}
+		,#{p_size}
+		,#{p_usablehair}
+		,#{p_recchar}
+		,#{p_price}
+		,#{p_amount}
+		,#{p_type}
+		,#{p_volume}
+		,#{p_color}
+		,#{p_recgender}
+		,#{p_rectaste}
+		<if test="p_image != null and p_image != ''">
+			,#{p_image}
+			,#{p_thumbnail}
+		</if>
+		<if test="p_detailimage != null and p_detailimage != ''">
+			,#{p_detailimage}
+		</if>
+		,#{p_searchkey}
+		)
+	</insert>
+	<!-- 상품 상세페이지 표시 -->
+	<select id="productDetail" parameterType="pvo" resultType="pvo">
+		select * from product where p_number=#{p_number}
+	</select>
+
+	<!-- 상품 갯수 체크 -->
+	<select id="cntProduct" parameterType="pvo" resultType="int">
+		select nvl(count(1),0) from (
+		select list.*, rownum as rnum from (
+		<include refid="list"></include>
+		) list
+		)
+		<if test="p_number != null and p_number != '' and p_number != 0">
+			where p_number=#{p_number}
+		</if>
+	</select>
+
+	<!-- 상품 정보 수정 -->
+	<update id="productMod" parameterType="pvo">
+		<![CDATA[update product 
+		set p_price=#{p_price}, p_amount=p_amount + #{p_amount} where
+		p_number=#{p_number}]]>
+	</update>
+	
+	<update id="p_amountMod" parameterType="int">
+		update product set p_amount = p_amount + #{amount} where p_number = #{p_number}
+	</update>
+</mapper>

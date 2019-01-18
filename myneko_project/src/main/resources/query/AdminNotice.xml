@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myneko.admin.notice.dao.NoticeDAO">
+	<select id="getNoticeList" parameterType="notice" resultType="notice">
+		select * from (
+			select list.*, rownum as rnum from (
+				select * from notice
+				<where>
+					<if test="search != null and search != ''">
+						n_title like '%' || #{keyword} || '%'
+					</if>
+				</where>
+				order by n_number desc
+			)list
+		)
+		<where>
+			<if test="start_row != null and start_row != ''">
+				<if test="end_row != null and end_row != ''">
+					rnum between #{start_row} and #{end_row}
+				</if>
+			</if>
+		</where>
+	</select>
+	<select id="noticeListCnt" resultType="int">
+		select nvl(count(*), 0)
+		from (
+			select list.*, rownum as rnum
+			from (
+				select * from notice
+				<where>
+					<if test="search != null and search != ''">
+						n_title like '%' || #{keyword} || '%'
+					</if>
+				</where>
+			) list
+		)
+	</select>
+	<insert id="insertNotice" parameterType="notice">
+		insert into notice(n_number, n_title, n_content, n_image, a_id)
+		values(notice_seq.nextval, #{n_title, jdbcType=VARCHAR}, #{n_content, jdbcType=VARCHAR}, #{n_image, jdbcType=VARCHAR}, #{a_id, jdbcType=VARCHAR})
+	</insert>
+	<select id="getNoticeDetail" parameterType="notice" resultType="notice">
+		select * from notice
+		where n_number = #{n_number}
+	</select>
+	<update id="noticeModify" parameterType="notice">
+		update notice set n_content = #{n_content}, n_image = #{n_image, jdbcType=VARCHAR} where n_number = #{n_number}
+	</update>
+	<delete id="noticeDelete" parameterType="notice">
+		delete from notice where n_number = #{n_number}
+	</delete>
+</mapper>

@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+#wapper{
+	width: 1700px;
+	margin: 0;
+}
+
+#detailContainer{
+	width: 1200px;
+	margin: auto;
+	background-color: #ebebeb;
+}
+

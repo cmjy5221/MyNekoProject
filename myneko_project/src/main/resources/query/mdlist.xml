@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.myneko.client.md.dao.MdlistDao">
+
+	<!-- 게시물 전부 불러오기 -->
+	<select id="allmdlist" resultType="com.myneko.client.md.vo.MdVO">
+		select p_image, p_thumbnail, p_name, p_division, p_price, p_amount, p_number
+		from product
+	</select>
+	
+	<!-- custom list -->
+	<select id="customlist" parameterType="String" resultType="com.myneko.client.md.vo.MdVO">
+	select *
+	from (
+		select p_image, p_thumbnail, p_name, p_division, p_price, p_amount, p_number
+		from product
+		where <![CDATA[ p_searchkey like '%'|| #{keyword} ||'%']]>
+		order by dbms_random.value
+	)
+	where rownum = 1
+	</select>
+	
+	<!-- 대표고양이 정보 불러오기 -->
+	<select id="capcatinfo" parameterType="int" resultType="com.myneko.client.cat.vo.CatVO">
+		select months_between(sysdate, to_char(to_date(c_birth),'YYYY-MM-DD')) as c_birth,
+		c_division, nvl(c_taste,'noData') as c_taste, c_disease, c_neutralization 
+		from cat right outer join dual
+		on m_number=#{m_number} and c_represent = 'O'
+	</select>
+
+	<!-- 상세페이지를 위한 md 정보 조회 -->
+	<select id="mddetail" parameterType="int" resultType="com.myneko.client.md.vo.MdVO">
+		select
+		p_number, p_division, p_name, p_brand, p_material, p_usableage, p_function,
+		p_size, p_usablehair, p_recchar, p_price, p_amount,
+		p_type, p_volume, p_color, p_recgender, p_thumbnail, p_detailimage, p_image
+		from product
+		where p_number = #{p_number}
+	</select>
+	
+	
+	<!-- 상품중에 선택된 카테고리만 관련 상품만 불러오기 -->
+	<select id="mdlistcate" parameterType="String" resultType="com.myneko.client.md.vo.MdVO">
+		select p_image, p_name, p_division, p_price, p_amount, p_number
+		from product
+		<where>
+			<![CDATA[ p_division like '%'||#{p_division}||'%' ]]>
+		</where>
+		order by p_number desc
+	</select>
+	
+	<select id="getProductReview" parameterType="int" resultType="com.myneko.client.review.vo.ReviewVO">
+		select * from review
+		where p_number = #{p_number}
+	</select>
+</mapper>

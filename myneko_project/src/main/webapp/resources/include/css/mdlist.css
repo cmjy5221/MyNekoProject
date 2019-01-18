@@ -1,0 +1,191 @@
+@charset "UTF-8";
+
+/* 공통부분 */
+.content1 {
+	width: 1200px;
+	margin: 30px auto;
+}
+.contentTitle {
+	color: #000000;
+}
+
+.pname{
+	font-size: 13px;
+	font-weight: bold;
+}
+
+
+/* mddetail 부분 */
+
+#detailheader {
+	width: 100%;
+}
+#detailheader h3 {
+	padding: 30px;
+	color: #000000;
+}
+
+.headersession {
+	width: 100%;
+}
+.mdimagesession {
+	width: 50%;
+	display: inline-block;
+}
+.mdinfosession {
+	width: 40%;
+	display: inline-block;
+	padding: 50px;
+}
+.mdinfosession table {
+	width: 100%;
+	cell-spacing: 15px;
+}
+.mdinfosession table td {
+	vertical-align: center;
+	padding-top: 10px;
+}
+.doorder .scontent {
+	font-size: 150%;
+}
+#totalprice {
+	color: #008080;
+}
+#maybesavemileage {
+	color: #65cdcf;
+}
+
+.stitle {
+	color: #383838;
+	text-align: right;
+}
+.scontent {
+	font-weight: bold;
+	text-align: center;
+}
+
+#soldout {
+	font-weight: bold;
+}
+
+.bodysession {
+	width: 100%;
+}
+
+.bodymdinfo {
+	padding: 50px;
+}
+.bodymdinfo .stitle{
+	font-weight: bold;
+	text-align: left;
+}
+
+.detailimage {
+	width: 700px;
+	margin: 0 auto;
+}
+#detailimage {
+	width: 100%;
+}
+
+#reviewboard {
+	background-color: #c0c0c0;
+}
+
+.mdbox {
+	width: 360px;
+	display: inline-block;
+}
+.inqurybtn {
+	width: 100%;
+}
+.btninquryatmd {
+	width: 400px;
+	margin: 10px auto;
+}
+
+
+
+
+
+
+/* allmdlist의 부트스트랩부분 */
+
+.row {
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.thumbnail {
+  display: block;
+  padding: 4px;
+  margin-bottom: 20px;
+  line-height: 1.42857143;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  -webkit-transition: border .2s ease-in-out;
+       -o-transition: border .2s ease-in-out;
+          transition: border .2s ease-in-out;
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .075);
+          box-shadow: 0 1px 2px rgba(0, 0, 0, .075);
+}
+.thumbnail > img,
+.thumbnail a > img {
+	width: 350px;
+	height: 350px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+a.thumbnail:hover,
+a.thumbnail:focus,
+a.thumbnail.active {
+  border-color: #337ab7;
+}
+
+.thumbnail .caption {
+  text-align: center;
+  padding: 9px;
+  color: #333;
+}
+
+
+
+/* forcustomerlist.jsp */
+#loginplease {
+	width: 100%;
+	height: 100px;
+	margin-bottom: 50px;
+	background-color: #d1d1d1;
+	text-align: center;
+}
+#loginplease a {
+	text-decoration: none;
+	font-color:  #000000;
+	margin-top: 38px;
+}
+#loginpleas a:hover {
+	font-color: #000000;
+	font-weight: bold;
+}
+.forclistcontent {
+	background-color: #d1d1d1;
+}
+.forclistcontent .contentTitle {
+	padding: 20px;
+}
+#changecatinfo {
+	padding: 20px;
+	text-align: center;
+}
+#nohavecat {
+	padding: 20px;
+	text-align: center;
+}

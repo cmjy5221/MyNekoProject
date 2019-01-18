@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myneko.client.inquiry.dao.ClientInquiryDAO">
+	<select id="getCIList" parameterType="civo" resultType="civo">
+		select * from (
+			select list.*, rownum as rnum from (
+				select * from inquiry
+					where m_id = #{m_id}
+					<choose>
+						<when test="search != null and search != ''">
+							<if test="search == 'i_title'">
+								and i_title like '%' || #{keyword} || '%'
+							</if>
+							<if test="search == 'i_content'">
+								and i_content like '%' || #{keyword} || '%'
+							</if>
+						</when>
+					</choose>
+				order by i_date desc
+			) list
+		)
+		<where>
+			<if test="start_row != null and start_row != ''">
+				<if test="end_row != null and end_row != ''">
+					rnum between #{start_row} and #{end_row}
+				</if>
+			</if>
+		</where>
+	</select>
+	<select id="getCICount" parameterType="civo" resultType="int">
+		select nvl(count(*), 0) from (
+			select list.*, rownum as rnum from (
+				select * from inquiry
+				where m_id = #{m_id}
+					<choose>
+						<when test="search != null and search != ''">
+							<if test="search == 'i_title'">
+								and i_title like '%' || #{keyword} || '%'
+							</if>
+							<if test="search == 'i_content'">
+								and i_content like '%' || #{keyword} || '%'
+							</if>
+						</when>
+					</choose>
+				order by i_date desc
+			) list
+		)
+	</select>
+	<insert id="CIinsert" parameterType="civo">
+		insert into inquiry(i_number, i_title, i_content, m_id, i_image)
+		values(inquiry_seq.nextval, #{i_title}, #{i_content}, #{m_id}, #{i_image})		
+	</insert>
+	<select id="getCIDetail" parameterType="civo" resultType="civo">
+		select * from inquiry
+		where i_number = #{i_number}
+	</select>
+	<select id="getCIReply" parameterType="civo" resultType="cirvo">
+		select * from inquiry_rep
+		where i_number = #{i_number}
+	</select>
+</mapper>

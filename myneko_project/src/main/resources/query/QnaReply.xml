@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myneko.admin.reply.dao.ReplyDAO">
+	<select id="getReply" parameterType="int" resultType="reply">
+		select * from inquiry_rep
+		where i_number = #{i_number}
+	</select>
+	<insert id="insertReply" parameterType="reply">
+		insert into inquiry_rep(rep_number, rep_content, i_number, a_id)
+		values(inq_rep_seq.nextval, #{rep_content}, #{i_number}, #{a_id})
+	</insert>
+</mapper>

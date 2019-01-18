@@ -1,0 +1,57 @@
+@charset "UTF-8";
+#listContainer{
+	width: 1000px;
+	margin: 0 auto;
+}
+
+#right {
+	float: right;
+}
+
+#gocart{
+	float: right;
+}
+
+table {
+	width: 1000px;
+	border-top: 1px solid #7b7b7b;
+	border-collapse: collapse;
+	
+}
+
+tr {
+	border-bottom: 1px solid #7b7b7b;
+	padding: 10px;
+	
+}
+
+th{
+	border-bottom: 1px solid #7b7b7b;
+	padding: 10px;
+	color: #616161;
+	
+}
+
+td{
+	text-align: center;
+	padding: 10px;
+	
+}
+
+.goDetail{
+	text-align: left;
+}
+
+a{
+	text-decoration: none;
+	color: black;
+}
+
+a:hover{
+	text-decoration: none;
+	color: #888888;
+}
+
+#Paging{
+	text-align: center;
+}

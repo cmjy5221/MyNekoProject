@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myneko.client.Faqboard.dao.FaqboardDAO">
+<!-- 게시물 기본 조회 -->
+<select id="Faqboard" resultType="faq">
+	select * from (
+		select list.*, rownum as rnum from (
+			select * from faq
+				<where>
+					<if test="search != null and search != ''">
+						f_title like '%' || #{keyword} || '%'
+					</if>
+				</where>
+			order by f_number desc
+		) list
+	)
+	<where>
+		<if test="start_row != null and start_row != ''">
+			<if test="end_row != null and end_row != ''">
+				rnum between #{start_row} and #{end_row}
+			</if>
+		</if>
+	</where>
+</select>
+<!--게시물 상세조회 -->
+<select id="faqDetail" resultType="cFaq">
+	SELECT f_number, f_title,f_content,f_image, a_id, f_date
+	FROM FAQ
+	WHERE f_number = #{f_number}
+ </select>
+ <select id="faqBoardCnt" resultType="int">
+ 	select nvl(count(1), 0) from (
+ 		select list.*, rownum as rnum from (
+ 			select * from faq
+ 			<where>
+ 				<if test="search != null and search != ''">
+ 					f_title like '%' || #{keyword} || '%'
+ 				</if>
+ 			</where>
+ 		) list
+ 	)
+ </select>
+</mapper>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.myneko.admin.product.vo.ProductVO"
+			alias="pvo" />
+		<typeAlias type="com.myneko.admin.member.vo.AMemberVO"
+			alias="mvo" />
+		<typeAlias type="com.myneko.admin.cc.vo.CareinfoBoardVO"
+			alias="cvo" />
+		<typeAlias alias="admin"
+			type="com.myneko.admin.admin.vo.AdminVO" />
+		<typeAlias alias="order"
+			type="com.myneko.admin.order.vo.OrderVO" />
+		<typeAlias alias="qna" type="com.myneko.admin.qna.vo.QnaVO" />
+		<typeAlias alias="reply"
+			type="com.myneko.admin.reply.vo.ReplyVO" />
+		<typeAlias alias="faq" type="com.myneko.admin.faq.vo.FaqVO" />
+		<typeAlias alias="notice"
+			type="com.myneko.admin.notice.vo.NoticeVO" />
+		<typeAlias alias="svo" type="com.myneko.common.vo.StatsVO" />
+		<typeAlias alias="ssvo" type="com.myneko.common.vo.SstatsVO" />
+		<typeAlias alias="catcare" type="com.myneko.client.catcare.vo.CatcareVO"/>
+		<typeAlias alias="cReply" type="com.myneko.client.carereply.vo.CareReplyVO"/>
+		<typeAlias alias="cart" type="com.myneko.client.cart.vo.CartVO"/>
+		<typeAlias alias="cFaq" type="com.myneko.client.faqboard.vo.FaqboardVO"/>
+		<typeAlias alias="bvo" type="com.myneko.client.boast.vo.BoastVO"/>
+		<typeAlias alias="rvo" type="com.myneko.client.review.vo.ReviewVO" />
+		<typeAlias alias="mdvo" type="com.myneko.client.md.vo.MdVO" />
+		<typeAlias alias="cnvo" type="com.myneko.client.notice.vo.ClientNoticeVO" />
+		<typeAlias alias="brvo" type="com.myneko.client.boastreply.vo.BoastReplyVO" />
+		<typeAlias alias="civo" type="com.myneko.client.inquiry.vo.ClientInquiryVO" />
+		<typeAlias alias="cirvo" type="com.myneko.client.cireply.vo.CIReplyVO" />
+	</typeAliases>
+</configuration>

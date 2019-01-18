@@ -1,0 +1,100 @@
+#listContainer{
+	width: 1000px;
+	margin: 0 auto;
+}
+
+#right {
+	float: right;
+}
+
+#gocart{
+	float: right;
+}
+
+table {
+	width: 1000px;
+	border-top: 1px solid #7b7b7b;
+	border-collapse: collapse;
+	
+}
+
+tr {
+	border-bottom: 1px solid #7b7b7b;
+	padding: 10px;
+	
+}
+
+th{
+	border-bottom: 1px solid #7b7b7b;
+	padding: 10px;
+	color: #616161;
+	
+}
+
+td{
+	text-align: center;
+	padding: 10px;
+	
+}
+
+.goDetail{
+	text-align: left;
+}
+
+#top{
+	background-color: #ebebeb;
+}
+
+#login{
+	text-decoration: none;
+	color: black;
+}
+
+#logout{
+	text-decoration: none;
+	color: black;
+}
+
+#catcarePage{
+	text-align : center; 
+	margin: 0 auto;
+	width: 100%;
+	
+}
+ 
+#search{
+	width: 25px; 
+}
+
+#qwe:hover{
+	cursor: pointer;
+	color: #888888;
+}
+
+a{
+	text-decoration: none;
+	color: black;
+}
+
+a:hover{
+	text-decoration: none;
+	color: #888888;
+}
+
+#searchData{
+	border-radius: 0px 0px 0px 0px;
+	background-color: white;
+	border: 0;
+	outline: 1px;
+	width: auto;
+	height: 20px;
+	outline-color: gray;
+	outline-style: solid;
+}
+
+
+#searchData:hover {
+	background-color: #e7e7e7;
+	cursor: pointer;
+}
+

@@ -1,0 +1,38 @@
+#replyInsert {
+float: left;
+	width: 68px;
+	height: 65px;
+	margin: 5px 5px 5px 0px;
+}
+
+#replycontent {
+float: left;
+	overflow-x: hidden;
+	overflow-y: auto;
+	margin: 5px 0px 5px 5px;
+}
+
+#replyarea {
+
+	width: 880px;
+	background-color: #d9d9d9;
+	height: 110px;
+}
+
+#update{
+	text-align: right;
+	color: #6d6d6d;
+	cursor: pointer;
+}
+
+#delete{
+	text-align: right;
+	color: #6d6d6d;
+	cursor: pointer;
+}
+
+#recontent{
+	width: 834px;
+	height: 100px;
+}
+

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myneko.client.notice.dao.ClientNoticeDAO">
+	<select id="noticeList" parameterType="cnvo" resultType="cnvo">
+		select * from (
+			select list.*, rownum as rnum from (
+				select * from notice
+				<where>
+					<if test="keyword != null and keyword != ''">
+						<if test="firstDate != null and firstDate != ''">
+							<if test="lastDate != null and lastDate != ''">
+								n_title like '%' || #{keyword} || '%' and to_char(n_date, 'yyyy-mm-dd') between #{firstDate} and #{lastDate}
+							</if>
+						</if>
+						<if test="firstDate == null and firstDate ==''">
+							n_title like '%' || #{keyword} || '%'
+						</if>
+					</if>
+					<if test="keyword == null and keyword == ''">
+						<if test="firstDate != null and firstDate != ''">
+							<if test="lastDate != null and lastDate != ''">
+								to_char(n_date, 'yyyy-mm-dd') between #{firstDate} and #{lastDate}
+							</if>
+						</if>
+					</if>
+				</where>
+				order by n_number desc
+			) list
+		)
+		<where>
+			<if test="start_row != null and start_row != ''">
+				<if test="end_row != null and end_row != ''">
+					rnum between #{start_row} and #{end_row}
+				</if>
+			</if>
+		</where>
+	</select>
+	<select id="noticeCount" parameterType="cnvo" resultType="int">
+		select nvl(count(1), 0) from (
+			select list.*, rownum as rnum from (
+				select * from notice
+				<where>
+					<if test="keyword != null and keyword != ''">
+						<if test="firstDate != null and firstDate != ''">
+							<if test="lastDate != null and lastDate != ''">
+								n_title like '%' || #{keyword} || '%' and to_char(n_date, 'yyyy-mm-dd') between #{firstDate} and #{lastDate}
+							</if>
+						</if>
+						<if test="firstDate == null and firstDate ==''">
+							n_title like '%' || #{keyword} || '%'
+						</if>
+					</if>
+					<if test="keyword == null and keyword == ''">
+						<if test="firstDate != null and firstDate != ''">
+							<if test="lastDate != null and lastDate != ''">
+								to_char(n_date, 'yyyy-mm-dd') between #{firstDate} and #{lastDate}
+							</if>
+						</if>
+					</if>
+				</where>
+				order by n_number desc
+			) list
+		)
+	</select>
+	<select id="cnoticeDetail" parameterType="cnvo" resultType="cnvo">
+		select * from notice
+		where n_number = #{n_number}
+	</select>
+</mapper>

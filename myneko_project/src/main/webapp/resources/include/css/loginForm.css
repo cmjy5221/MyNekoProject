@@ -1,0 +1,72 @@
+@charset "UTF-8";
+
+
+
+#wapper {
+	width: 100%;
+	height: auto;
+	text-align: center;
+	
+}
+
+a{
+	text-decoration: none;
+	color: #999999;
+}
+
+#logo {
+	text-align: center;
+	clear: both;
+}
+
+#loginLeft {
+	float: left;
+	width: 35%;
+	height:300px;
+}
+
+#loginTable {
+	float: left;
+	width: 400px;
+}
+
+table{
+border: 1px;
+	}
+
+#loginRight{
+	width: 35%;
+	float: left;
+	height:300px;
+}
+
+#loginForm {
+	text-align: center;
+	
+}
+table tr th{
+	font-size: 20px;
+	text-align: right;
+}
+
+
+#loginBtn{
+	width: 400px;
+	font-size: 30px;
+	margin-top: 15px;
+	/* background-color: #5bb700; */
+	text-shadow: 1px 1px 2px black;
+	border-radius: 10px;
+}
+
+input[type="text"],input[type="password"]{
+	width:90%;
+	font-size: 20px;
+	margin-top: 5px;
+}
+
+caption,#loginLabel{
+	font-size: 30px;
+	font-weight: bold;
+	text-align: left;
+}

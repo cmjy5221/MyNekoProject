@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myneko.client.boast.dao.BoastDAO">
+<!-- 게시물 기본 조회 -->
+<select id="boastList" resultType="bvo"> 
+select * from (
+		select list.*, rownum as rnum from (
+			select * from boast where b_division like '%' || #{b_division, jdbcType=VARCHAR} || '%' 
+				<if test="search != null and search != ''">
+					<choose>
+						<when test="search == '제목'">
+							and b_title like '%' || #{keyword} || '%'
+						</when>
+						<when test="search == '내용'">
+							and b_content like '%' || #{keyword} || '%'
+						</when>
+					</choose>
+				</if>
+			order by b_number desc
+		) list
+	)
+	<where>
+		<if test="start_row != null and start_row != ''">
+			<if test="end_row != null and end_row != ''">
+				rnum between #{start_row} and #{end_row}
+			</if>
+		</if>	
+	</where>
+</select>
+<!-- 상세페이지 를 위한 게시물 조회 -->
+<select id="boastDetail" resultType="bvo">
+SELECT b_number, b_title, b_content, m_number, b_division, m_id, b_date
+FROM boast where b_number = #{b_number}
+</select>
+<select id="boastCnt" resultType="int">
+	select nvl(count(1), 0) from (
+		select list.*, rownum as rnum from (
+			select * from boast
+			<where>
+				<if test="keyword != null and keyword != ''">
+					b_title like '%' || #{keyword} || '%'
+				</if>
+			</where>
+		) list
+	)
+</select>
+
+<!-- 게시물 등록 -->
+<insert id="boastInsert" parameterType="bvo">
+<selectKey keyProperty="b_number" resultType="int" order="BEFORE"> 
+	select boast_seq.nextval from dual
+</selectKey>
+	INSERT INTO BOAST(
+		b_number,
+		b_title,
+		b_image,
+		b_content,
+		m_number,
+		b_division
+	) 
+	VALUES(
+		#{b_number}
+		,#{b_title}
+		,#{b_image}
+		,#{b_content}
+		,#{m_number}
+		,#{b_division}
+	)
+
+</insert>
+
+
+</mapper>

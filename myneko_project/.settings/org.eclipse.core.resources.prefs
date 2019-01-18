@@ -1,0 +1,14 @@
+eclipse.preferences.version=1
+encoding//src/main/java/com/myneko/admin/product/controller/ProductContorller.java=UTF-8
+encoding//src/main/java/com/myneko/client/cart/controller/CartController.java=UTF-8
+encoding//src/main/java/com/myneko/client/cart/vo/CatorderVO.java=UTF-8
+encoding//src/main/java/com/myneko/client/myorder/controller/myorderController.java=UTF-8
+encoding//src/main/java/com/myneko/client/myorder/dao/myorderDao.java=UTF-8
+encoding//src/main/java/com/myneko/client/myorder/dao/myorderDaoImpl.java=UTF-8
+encoding//src/main/java/com/myneko/client/myorder/service/myorderService.java=UTF-8
+encoding//src/main/java/com/myneko/client/myorder/service/myorderServiceImpl.java=UTF-8
+encoding//src/main/java/com/myneko/client/review/controller/ReviewController.java=UTF-8
+encoding//src/main/java/com/myneko/client/review/dao/ReviewDaoImpl.java=UTF-8
+encoding//src/main/java/com/myneko/client/review/service/ReviewServiceImpl.java=UTF-8
+encoding//src/main/webapp/resources/include/css/header.css=UTF-8
+encoding/<project>=UTF-8

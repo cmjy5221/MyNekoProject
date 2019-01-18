@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myneko.client.review.dao.ReviewDao">
+
+	<sql id="reviewCommon">
+		select * from review
+	</sql>
+	<sql id="productReview">
+		select * from review where p_number =#{p_number}
+	</sql>
+	<!-- 리뷰게시물 조회 -->
+	<select id="reviewList"
+		resultType="com.myneko.client.review.vo.ReviewVO"
+		parameterType="com.myneko.client.review.vo.ReviewVO">
+		select * from (
+			select list.*, rownum as rnum from (
+				<choose>
+					<when test="p_number != null and p_number != ''">
+						select * from review where p_number = #{p_number}
+					</when>
+					<otherwise>
+						select * from review
+					</otherwise>
+				</choose>
+				order by r_date desc
+			) list
+		)
+		<where>
+			<if test="start_row != null and start_row != ''">
+				<if test="end_row != null and end_row != ''">
+					rnum between #{start_row} and #{end_row}
+				</if>
+			</if>
+		</where>
+	</select>
+	<select id="reviewCnt" parameterType="com.myneko.client.review.vo.ReviewVO" resultType="int">
+		select nvl(count(*), 0) from (
+			select list.*, rownum as rnum from (
+				<choose>
+					<when test="p_number != null and p_number != ''">
+						select * from review where p_number = #{p_number}
+					</when>
+					<otherwise>
+						select * from review
+					</otherwise>
+				</choose>
+			) list
+		)
+	</select>
+	<!-- 리뷰 등록 -->
+	<insert id="reviewInsert"
+		parameterType="com.myneko.client.review.vo.ReviewVO">
+		insert into
+		review(
+		r_number, r_title, r_content, r_starrate, m_number,
+		p_number, p_name, m_id
+		<if test="r_image != null and r_image != ''">
+			,r_image
+		</if>
+		)
+		values(
+		review_seq.nextval
+		,#{r_title}
+		,#{r_content}
+		,#{r_starrate}
+		,#{m_number}
+		,#{p_number}
+		,(select p_name from product where p_number = #{p_number})
+		,(select m_id from member where m_number = #{m_number})
+		<if test="r_image != null and r_image != ''">
+			,#{r_image}
+		</if>
+		)
+	</insert>
+
+	<!-- review 상세 페이지 게시물 조회 -->
+	<select id="reviewDetail"
+		parameterType="com.myneko.client.review.vo.ReviewVO"
+		resultType="com.myneko.client.review.vo.ReviewVO">
+		select *
+		<!-- r_number, m_number, r_title, r_content, to_char(r_date,'YYYY-MM-DD 
+			HH24:MI:SS')as r_date -->
+		from review
+		where r_number = #{r_number}
+	</select>
+
+	<!-- 게시물 수정 -->
+	<update id="reviewUpdate"
+		parameterType="com.myneko.client.review.vo.ReviewVO">
+		update review
+		set r_content =
+		#{r_content}
+		,r_date = sysdate
+		where r_number = #{r_number}
+	</update>
+
+	<delete id="reviewDelete"
+		parameterType="com.myneko.client.review.vo.ReviewVO">
+		delete from review where r_number=#{r_number}
+	</delete>
+	
+	<select id="getPartiorderList" parameterType="int" resultType="com.myneko.client.cart.vo.PartiorderVO">
+		select * from partiorder
+		where o_number = #{o_number}
+	</select>
+	
+	<update id="changeState" parameterType="com.myneko.client.myorder.vo.myorderVO">
+		update cat_order set o_state = #{o_state} where o_number = #{o_number}
+	</update>
+	
+	<update id="plusM" parameterType="com.myneko.client.myorder.vo.myorderVO">
+		update member set m_mileage = m_mileage + #{o_milage} where m_number = #{m_number}
+	</update>
+</mapper>

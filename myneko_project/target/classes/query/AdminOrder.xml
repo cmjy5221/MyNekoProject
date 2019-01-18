@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myneko.admin.order.dao.OrderDAO">
+	<select id="getPartiOrderList" resultType="com.myneko.client.cart.vo.PartiorderVO">
+		select po_number, o_number, p_number, po_amount, po_price
+		from partiorder
+	</select>
+	<select id="getOrderList" resultType="order">
+		select * from (
+			select list.*, rownum as rnum from (
+				select * from cat_order
+				<where>
+					<choose>
+						<when test="keyword != null and keyword != ''">
+							<if test="firstDate != null and firstDate != ''">
+								o_name like '%' || #{keyword} || '%' and to_char(o_date, 'yyyy-mm-dd') between #{firstDate} and #{lastDate}
+							</if>
+							<if test="firstDate == null and firstDate == ''">
+								o_name like '%' || #{keyword} || '%'
+							</if>
+						</when>
+						<when test="keyword == null and keyword == ''">
+							<if test="firstDate != null and firstDate != ''">
+								to_char(o_date, 'yyyy-mm-dd') between #{firstDate} and #{lastDate}
+							</if>
+							<if test="firstDate == null and firstDate == ''">
+							</if>
+						</when>
+					</choose>
+				</where>
+				order by o_date desc
+			)list
+		)
+		<where>
+			<if test="start_row != null and start_row != ''">
+				<if test="end_row != null and end_row != ''">
+					rnum between #{start_row} and #{end_row}
+				</if>
+			</if>
+		</where>
+	</select>
+	
+	<update id="orderStateModify">
+		update cat_order set o_state = #{o_state} where o_number = #{o_number}
+	</update>
+	
+	<select id="orderListCnt" parameterType="order" resultType="int">
+		select nvl(count(1), 0) from
+		(select list.*, rownum as rnum from (
+			select * from cat_order
+		) list
+		)
+	</select>
+	<select id="salesStats" parameterType="order" resultType="ssvo">
+		select p_division "division", to_char(o_date, 'mm') "month", sum(o_totalprice) "sales", sum(o_amount) "amount"
+		from cat_order where o_state like '%' || #{o_state, jdbcType=VARCHAR} || '%'
+		<if test="year != null and year != ''">
+			and to_char(o_date, 'yyyy') = #{year}
+		</if>
+		group by p_division, to_char(o_date, 'mm')
+		order by p_division asc
+	</select>
+	<select id="maxYear" parameterType="order" resultType="String">
+		select max(to_char(o_date, 'yyyy'))
+		from cat_order
+		where o_state like '%' || #{o_state, jdbcType=VARCHAR} || '%'
+	</select>
+	<select id="minYear" parameterType="order" resultType="String">
+		select min(to_char(o_date, 'yyyy'))
+		from cat_order
+		where o_state like '%' || #{o_state, jdbcType=VARCHAR} || '%'
+	</select>
+	<select id="yearSales" parameterType="order" resultType="ssvo">
+		select sum(o_totalprice) "sales"
+		from cat_order where o_state like '%' || #{o_state, jdbcType=VARCHAR} || '%'
+		<if test="year != null and year != ''">
+			and to_char(o_date, 'yyyy') = #{year}
+		</if>
+	</select>
+	<select id="monthly" parameterType="order" resultType="ssvo">
+		select nvl((select sum(o_totalprice) from cat_order where to_char(o_date, 'yyyy') = #{year} and to_char(o_date, 'mm') = 01 and o_state like '%' || #{o_state, jdbcType=VARCHAR} || '%'), 0) "jan",
+		nvl((select sum(o_totalprice) from cat_order where to_char(o_date, 'yyyy') = #{year} and to_char(o_date, 'mm') = 02 and o_state like '%' || #{o_state, jdbcType=VARCHAR} || '%'), 0) "feb",
+		nvl((select sum(o_totalprice) from cat_order where to_char(o_date, 'yyyy') = #{year} and to_char(o_date, 'mm') = 03 and o_state like '%' || #{o_state, jdbcType=VARCHAR} || '%'), 0) "mar",
+		nvl((select sum(o_totalprice) from cat_order where to_char(o_date, 'yyyy') = #{year} and to_char(o_date, 'mm') = 04 and o_state like '%' || #{o_state, jdbcType=VARCHAR} || '%'), 0) "apr",
+		nvl((select sum(o_totalprice) from cat_order where to_char(o_date, 'yyyy') = #{year} and to_char(o_date, 'mm') = 05 and o_state like '%' || #{o_state, jdbcType=VARCHAR} || '%'), 0) "may",
+		nvl((select sum(o_totalprice) from cat_order where to_char(o_date, 'yyyy') = #{year} and to_char(o_date, 'mm') = 06 and o_state like '%' || #{o_state, jdbcType=VARCHAR} || '%'), 0) "jun",
+		nvl((select sum(o_totalprice) from cat_order where to_char(o_date, 'yyyy') = #{year} and to_char(o_date, 'mm') = 07 and o_state like '%' || #{o_state, jdbcType=VARCHAR} || '%'), 0) "jul",
+		nvl((select sum(o_totalprice) from cat_order where to_char(o_date, 'yyyy') = #{year} and to_char(o_date, 'mm') = 08 and o_state like '%' || #{o_state, jdbcType=VARCHAR} || '%'), 0) "aug",
+		nvl((select sum(o_totalprice) from cat_order where to_char(o_date, 'yyyy') = #{year} and to_char(o_date, 'mm') = 09 and o_state like '%' || #{o_state, jdbcType=VARCHAR} || '%'), 0) "sep",
+		nvl((select sum(o_totalprice) from cat_order where to_char(o_date, 'yyyy') = #{year} and to_char(o_date, 'mm') = 10 and o_state like '%' || #{o_state, jdbcType=VARCHAR} || '%'), 0) "oct",
+		nvl((select sum(o_totalprice) from cat_order where to_char(o_date, 'yyyy') = #{year} and to_char(o_date, 'mm') = 11 and o_state like '%' || #{o_state, jdbcType=VARCHAR} || '%'), 0) "nov",
+		nvl((select sum(o_totalprice) from cat_order where to_char(o_date, 'yyyy') = #{year} and to_char(o_date, 'mm') = 12 and o_state like '%' || #{o_state, jdbcType=VARCHAR} || '%'), 0) "dec"
+		from dual
+	</select>
+	<select id="monthlyStats" parameterType="order" resultType="ssvo">
+		select to_char(o_date, 'yyyy-mm') "month", sum(o_totalprice) "sales"
+		from cat_order
+		where to_char(o_date, 'yyyy') = #{year} and o_state like '%' || #{o_state, jdbcType=VARCHAR} || '%'
+		group by to_char(o_date, 'yyyy-mm')
+	</select>
+	<select id="getPartiorderList2" parameterType="int" resultType="com.myneko.client.cart.vo.PartiorderVO">
+		select * from partiorder
+		where o_number = #{o_number}
+	</select>
+	<select id="orderDetail" parameterType="int" resultType="order">
+		select * from cat_order
+		where o_number = #{o_number}
+	</select>
+</mapper>

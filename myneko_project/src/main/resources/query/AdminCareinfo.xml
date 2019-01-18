@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="query.AdminCareinfo">
+	<select id="careinfoList" resultType="cvo" parameterType="cvo">
+		select * from (select list.*, rownum as rnum from (
+		select * from
+		careinfo
+		<if test="firstDate != null and firstDate != ''">
+			<choose>
+				<when test="ci_title == null or ci_title == ''">
+		<![CDATA[where to_char(ci_date,'yyyy-mm-dd') >= #{firstDate} and to_char(ci_date,'yyyy-mm-dd') <= #{lastDate}]]>
+				</when>
+				<when test="ci_title != null and ci_title != ''">
+		<![CDATA[where to_char(ci_date,'yyyy-mm-dd') >= #{firstDate} and to_char(ci_date,'yyyy-mm-dd') <= #{lastDate}]]>
+					and ci_title like '%'|| #{ci_title} ||'%'
+				</when>
+			</choose>
+		</if>
+		<choose>
+			<when test="order_by == 'ci_date'">
+				<choose>
+					<when test="order_sc == 'DESC'">
+						order by ci_date desc
+					</when>
+					<when test="order_sc == 'ASC'">
+						order by ci_date asc
+					</when>
+				</choose>
+			</when>
+			<when test="order_by == 'ci_number'">
+				<choose>
+					<when test="order_sc == 'DESC'">
+						order by ci_number desc
+					</when>
+					<when test="order_sc == 'ASC'">
+						order by ci_number asc
+					</when>
+				</choose>
+			</when>
+			<otherwise>
+				order by ci_date desc
+			</otherwise>
+		</choose>
+		) list
+		)
+		<where>
+			<if test="start_row != null and start_row != ''">
+				<if test="end_row != null and end_row != ''">
+					rnum between #{start_row} and #{end_row}
+				</if>
+			</if>
+		</where>
+
+	</select>
+	<select id="careinfoCount" resultType="int" parameterType="cvo">
+		select nvl(count(*),0)
+		from (select list.*, rownum as rnum from (
+		select * from
+		careinfo
+		<if test="firstDate != null and firstDate != ''">
+			<choose>
+				<when test="ci_title == null or ci_title == ''">
+		<![CDATA[where to_char(ci_date,'yyyy-mm-dd') >= #{firstDate} and to_char(ci_date,'yyyy-mm-dd') <= #{lastDate}]]>
+				</when>
+				<when test="ci_title != null and ci_title != ''">
+		<![CDATA[where to_char(ci_date,'yyyy-mm-dd') >= #{firstDate} and to_char(ci_date,'yyyy-mm-dd') <= #{lastDate}]]>
+					and ci_title like '%'||#{ci_title}||'%'
+				</when>
+			</choose>
+		</if>
+		) list
+		)
+	</select>
+	<insert id="careinfoInsert" parameterType="cvo">
+		insert into
+		careinfo(ci_number,ci_title,ci_content,ci_image,a_number, a_id)
+		values(careinfo_seq.nextval,#{ci_title},#{ci_content},#{ci_image},#{a_number}, (select a_id from admin where a_number = #{a_number}))
+	</insert>
+
+	<delete id="careinfoDelete" parameterType="cvo">
+		delete from careinfo
+		where ci_number=#{ci_number}
+	</delete>
+
+	<select id="careinfoDetail" parameterType="cvo" resultType="cvo">
+		select * from careinfo
+		where ci_number=#{ci_number}
+	</select>
+
+	<update id="careinfoUpdate" >
+		update careinfo set
+		ci_title=#{ci_title}, ci_content=#{ci_content},
+		ci_image=#{ci_image}
+		where ci_number=#{ci_number}
+	</update>
+</mapper>

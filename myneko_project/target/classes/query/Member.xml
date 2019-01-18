@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myneko.client.member.dao.MemberDAO">
+
+	<insert id="insertMember"
+		parameterType="com.myneko.client.member.vo.MemberVO">
+		insert into
+		member(m_number,m_name,m_phone,m_password,m_id,m_postcode,m_address,m_detailaddress,m_email,m_mileage)
+		values(member_seq.nextval,#{m_name},#{m_phone},#{m_password},#{m_id},#{m_postcode},#{m_address},#{m_detailaddress},#{m_email},0)
+	</insert>
+
+	<select id="loginMember"
+		parameterType="com.myneko.client.member.vo.MemberVO"
+		resultType="com.myneko.client.member.vo.MemberVO">
+		select * from member where m_id= #{m_id} and m_password =
+		#{m_password}
+	</select>
+
+	<select id="idOverlapChk" parameterType="java.lang.String"
+		resultType="int">
+		select count(*) from member where m_id=#{id}
+	</select>
+	<update id="updatePassword"
+		parameterType="com.myneko.client.member.vo.MemberVO">
+		update member set m_password = #{m_password} where m_id = #{m_id}
+	</update>
+	<update id="addressModifi">
+		update member set m_postcode = #{m_postcode},m_address = #{m_address} where
+		m_number = #{m_number}
+	</update>
+	<update id="modifi">
+		update member set m_name = #{m_name},m_phone = #{m_phone},m_email=#{m_email}
+		where m_number = #{m_number}
+	</update>
+	<delete id="withdrawal"
+		parameterType="com.myneko.client.member.vo.MemberVO">
+		update member set m_state = #{m_state} where m_number = #{m_number}
+	</delete>
+</mapper>

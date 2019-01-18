@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myneko.admin.member.dao.memberDAO">
+	<resultMap type="java.util.HashMap" id="graph" />
+	<select id="memberList" resultType="mvo">
+		select * from (select list.*, rownum as rnum from (
+		select * from
+		member
+		<if test="firstDate != null and firstDate != ''">
+			<if test="lastDate != null and lastDate != ''">
+		<![CDATA[where to_char(m_register,'yyyy-mm-dd') between #{firstDate} and #{lastDate}]]>
+			</if>
+		</if>
+		) list)
+		<where>
+			<if test="start_row != null and start_row != ''">
+				<if test="end_row != null and end_row != ''">
+					rnum between #{start_row} and #{end_row}
+				</if>
+			</if>
+		</where>
+	</select>
+
+	<select id="memberCount" resultType="int">
+		select nvl(count(1),0) from
+		(
+		select list.*, rownum as rnum from
+		(
+		select * from member
+		<where>
+			<if test="firstDate != null and firstDate != ''">
+				<if test="lastDate != null and lastDate != ''">
+					to_char(m_register, 'yyyy-mm-dd') between #{firstDate} and #{lastDate}
+				</if>
+			</if>
+		</where>
+		) list
+		)
+	</select>
+	<select id="memberStatusList" resultType="svo">
+		select to_char(m_register, 'YYYY-MM-DD') "register", count(case when
+		m_state = '탈퇴' then 1 end) "leaveCount", count(*) "joinCount"
+		from
+		member
+		<where>
+			<if test="firstDate != null and firstDate != ''">
+				<if test="lastDate != null and lastDate != ''">
+					to_char(m_register, 'YYYY-MM-DD') between #{firstDate}
+					and #{lastDate}
+				</if>
+			</if>
+		</where>
+		group by to_char(m_register, 'YYYY-MM-DD')
+		order by to_char(m_register,
+		'YYYY-MM-DD') asc
+	</select>
+	<select id="getMemberCount" parameterType="mvo" resultType="int">
+		select count(*) from member
+		<where>
+			<if test="firstDate != null and firstDate != ''">
+				<if test="lastDate != null and lastDate != ''">
+					to_char(m_register, 'yyyy-mm-dd') between #{firstDate}
+					and #{lastDate}
+				</if>
+			</if>
+		</where>
+	</select>
+	<select id="memberStats" parameterType="mvo" resultType="svo">
+		select count(case when m_state = '탈퇴' then 1 end) "leaveCount",
+		count(*) "joinCount"
+		from member
+		<where>
+			<if test="firstDate != null and firstDate != ''">
+				<if test="lastDate != null and lastDate != ''">
+					to_char(m_register, 'YYYY-MM-DD') between #{firstDate}
+					and #{lastDate}
+				</if>
+			</if>
+		</where>
+	</select>
+</mapper>

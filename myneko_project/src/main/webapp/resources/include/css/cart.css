@@ -1,0 +1,106 @@
+#cartContainer{
+	width: 1000px;
+	margin: 0 auto;
+}
+
+table{
+	width: 1000px;
+	border-collapse: collapse;
+}
+
+th, td{
+	padding: 10px;
+}
+
+.ctAmount{
+	height: 23px;
+	width: 25px;
+	text-align: center;
+}
+
+#cartimg{
+	width: auto;
+	float: left;
+	margin-bottom: 10px;
+	margin-top: 100px;
+}
+
+#goorder {
+	border-radius: 0px 0px 0px 0px;
+	background-color: #ff5155;
+	color: white;
+	border: 0;
+	outline: 1px;
+	width: auto;
+	height: 30px;
+	outline-color: #ff5155;
+	outline-style: solid;
+	
+}
+
+#goorder:hover{
+	background-color: #fb0006;
+	cursor: pointer;
+}
+
+#checkdelete {
+	border-radius: 0px 0px 0px 0px;
+	background-color: white;
+	border: 0;
+	outline: 1px;
+	width: auto;
+	height: 30px;
+	outline-color: gray;
+	outline-style: solid;
+}
+
+#checkdelete:hover {
+	background-color: #e7e7e7;
+	cursor: pointer;
+}
+
+#edit{
+	border-radius: 0px 0px 0px 0px;
+	background-color: #e7e7e7;
+	border: 0;
+	outline: 1px;
+	width: auto;
+	height: 25px;
+	outline-color: gray;
+	outline-style: solid;
+}
+
+#edit:hover {
+	background-color: #d5d5d5;
+	cursor: pointer;
+}
+
+#thisDelete{
+	border-radius: 0px 0px 0px 0px;
+	background-color: #e7e7e7;
+	border: 0;
+	outline: 1px;
+	width: auto;
+	height: 25px;
+	outline-color: gray;
+	outline-style: solid;
+}
+
+#thisDelete:hover {
+	background-color: #d5d5d5;
+	cursor: pointer;
+}
+
+#fileImage{
+	width: 50px;
+	height: 60px;	
+}
+
+#money{
+	margin-top: 40px;
+	margin-bottom: 40px;
+	font-weight: bold;
+}
+
+
+

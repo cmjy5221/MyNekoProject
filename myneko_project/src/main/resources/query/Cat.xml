@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myneko.client.cat.dao.CatDAO">
+
+	<select id="catList" parameterType="com.myneko.client.cat.vo.CatVO" resultType="com.myneko.client.cat.vo.CatVO">
+		select c_number,c_name,m_number,c_division,c_taste,to_char(sysdate,'yyyy')-to_char(to_date(c_birth),'yyyy')+1
+		 as c_birth ,c_disease,c_gender,c_neutralization,c_profile,c_represent from cat where m_number = #{m_number}
+	</select>
+	
+	<insert id="catInsert"
+		parameterType="com.myneko.client.cat.vo.CatVO">
+		insert into
+		cat(c_number,c_name,m_number,c_division,c_taste,c_birth,c_disease,c_gender,c_neutralization,c_profile)
+		values(cat_seq.nextval,#{c_name},#{m_number},#{c_division},#{c_taste},to_date(#{c_birth},'YYYY-MM-DD'),#{c_disease,
+		jdbcType=VARCHAR},#{c_gender},#{c_neutralization}
+		<if test="c_profile != null">,#{c_profile}</if>
+		<if test="c_profile == null">,null</if>
+		)
+	</insert>
+	<delete id="deleteCat"
+		parameterType="com.myneko.client.cat.vo.CatVO">
+		delete from cat where c_number = #{c_number}
+	</delete>
+	<update id="afterRepresent"
+		parameterType="com.myneko.client.cat.vo.CatVO">
+		update cat set c_represent = 'X' where m_number
+		=#{m_number}
+	</update>
+	<update id="represent"
+		parameterType="com.myneko.client.cat.vo.CatVO">
+		update cat set c_represent = 'O' where c_number =
+		#{c_number}
+	</update>
+	<select id="detailCat"
+		parameterType="com.myneko.client.cat.vo.CatVO"
+		resultType="com.myneko.client.cat.vo.CatVO">
+		select * from cat where c_number = #{c_number}
+	</select>
+	<delete id="catAllDelete" parameterType="com.myneko.client.member.vo.MemberVO">
+	delete from cat where m_number = #{m_number}
+	</delete>
+	
+</mapper>

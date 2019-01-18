@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myneko.client.myorder.dao.myorderDao">
+
+	<sql id="myorderCommon">
+		select * from cat_order
+	</sql>
+	
+	<select id="myorderList"
+		resultType="com.myneko.client.myorder.vo.myorderVO"
+		parameterType="int">
+		select * from (
+			select list.*, rownum as rnum from (
+				select * from cat_order
+				where m_number = #{m_number}
+				order by o_date desc
+			) list
+		)
+		<where>
+			<if test="start_row != null and start_row != ''">
+				<if test="end_row != null and end_row != ''">
+					rnum between #{start_row} and #{end_row}
+				</if>
+			</if>
+		</where>
+	</select>
+
+	<select id="myorderListCnt"
+		parameterType="com.myneko.client.myorder.vo.myorderVO"
+		resultType="int">
+		select nvl(count(*), 0) from (
+			select list.* from (
+				select * from cat_order
+				where m_number = #{m_number}
+			) list
+		)
+	</select>
+
+	<select id="myorderDetail"
+		resultType="com.myneko.client.myorder.vo.myorderVO"
+		parameterType="com.myneko.client.myorder.vo.myorderVO">
+		select * from cat_order
+		where o_number = #{o_number}
+	</select>
+
+	<select id="findProduct"
+		resultType="com.myneko.client.cart.vo.PartiorderVO" parameterType="int">
+		select * from partiorder where o_number = #{o_number}
+	</select>
+
+	<select id="findMember"
+		resultType="com.myneko.client.member.vo.MemberVO" parameterType="int">
+		select * from member where m_number = (select m_number from cat_order
+		where
+		o_number = #{o_number})
+	</select>
+
+	<select id="findOrder"
+		resultType="com.myneko.client.myorder.vo.myorderVO"
+		parameterType="int">
+		select * from cat_order
+		where
+		o_number = #{o_number}
+	</select>
+
+	<delete id="myorderDelete"
+		parameterType="com.myneko.client.myorder.vo.myorderVO">
+		delete from cat_order where o_number=#{o_number}
+	</delete>
+	<update id="myorderChange" parameterType="com.myneko.client.myorder.vo.myorderVO">
+		update cat_order set o_state = #{o_state}
+		where o_number = #{o_number}
+	</update>
+	<update id="myorderAddressModify"
+		parameterType="com.myneko.client.myorder.vo.myorderVO">
+		update cat_order set o_address = #{o_address} where o_number =#{o_number}
+	</update>
+	
+	<update id="plusMilage" parameterType="com.myneko.client.myorder.vo.myorderVO">
+		update member set m_mileage = #{o_milage} where m_number = #{m_number}
+	</update>
+	
+	<select id="getpartiorderlist" parameterType="int" resultType="com.myneko.client.cart.vo.PartiorderVO">
+		select * from partiorder where o_number = #{o_number}
+	</select>
+	
+	<update id="amountChange" parameterType="com.myneko.client.cart.vo.PartiorderVO">
+		update product set p_amount = p_amount + #{po_amount} where p_number = #{p_number}
+	</update>
+</mapper>

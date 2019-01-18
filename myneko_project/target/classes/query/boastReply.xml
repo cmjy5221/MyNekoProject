@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myneko.client.boastreply.dao.BoastReplyDAO">
+	<select id="boastReplyList" parameterType="brvo" resultType="brvo">
+		select br_number, br_content, to_char(br_date, 'yyyy-mm-dd hh24:mi:ss') as br_date, m_id, b_number from
+		b_reply
+		where b_number = #{b_number}
+		order by br_date desc
+	</select>
+	<insert id="boastReplyInsert" parameterType="brvo">
+		insert into b_reply(br_number, br_content, b_number, m_number, m_id)
+		values (br_seq.nextval, #{br_content}, #{b_number}, #{m_number}, (select m_id from member where m_number = #{m_number}))
+	</insert>
+	<delete id="boastReplyDelete" parameterType="int">
+		delete from b_reply
+		where br_number = #{br_number}
+	</delete>
+	<update id="boastReplyUpdate" parameterType="brvo">
+		update b_reply set br_content = #{br_content}
+		where br_number = #{br_number}
+	</update>
+	<delete id="boastReplyDeleteAll" parameterType="int">
+		delete from b_reply
+		where b_number = #{b_number}
+	</delete>
+</mapper>

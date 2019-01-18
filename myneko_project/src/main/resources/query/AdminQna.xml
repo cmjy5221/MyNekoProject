@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myneko.admin.qna.dao.QnaDAO">
+	<select id="getQnaList" parameterType="qna" resultType="qna">
+		select * from (
+			select list.*, rownum as rnum from (
+				select * from inquiry
+				<choose>
+					<when test="keyword == null and keyword == ''">
+						<if test="firstDate == null and firstDate == ''">
+						</if>
+						<if test="firstDate != null and firstDate != ''">
+							<if test="lastDate != null and lastDate != ''">
+								where to_char(i_date, 'yyyy-mm-dd') between #{firstDate} and #{lastDate}
+							</if>
+						</if>
+					</when>
+					<when test="keyword != null and keyword != ''">
+						<if test="firstDate == null and firstDate == ''">
+							where i_title like '%' || #{keyword} || '%'
+						</if>
+						<if test="firstDate != null and firstDate != ''">
+							<if test="lastDate != null and lastDate != ''">
+								where i_title like '%' || #{keyword} || '%' and to_char(i_date, 'yyyy-mm-dd') between #{firstDate} and #{lastDate}
+							</if>
+						</if>
+					</when>
+				</choose>
+				order by i_number desc
+			)list
+		)
+		<where>
+			<if test="start_row != null and start_row != ''">
+				<if test="end_row != null and end_row != ''">
+					rnum between #{start_row} and #{end_row}
+				</if>
+			</if>
+		</where>
+	</select>
+	<select id="qnaListCnt" parameterType="qna" resultType="int">
+		select nvl(count(1), 0) from
+		(select list.*, rownum as rnum from (
+			select * from inquiry
+			<choose>
+				<when test="keyword == null and keyword == ''">
+					<if test="firstDate == null and firstDate == ''">
+					</if>
+					<if test="firstDate != null and firstDate != ''">
+						<if test="lastDate != null and lastDate != ''">
+							where to_char(i_date, 'yyyy-mm-dd') between #{firstDate} and #{lastDate}
+						</if>
+					</if>
+				</when>
+				<when test="keyword != null and keyword != ''">
+					<if test="firstDate == null and firstDate == ''">
+						where i_title like '%' || #{keyword} || '%'
+					</if>
+					<if test="firstDate != null and firstDate != ''">
+						<if test="lastDate != null and lastDate != ''">
+							where i_title like '%' || #{keyword} || '%' and to_char(i_date, 'yyyy-mm-dd') between #{firstDate} and #{lastDate}
+						</if>
+					</if>
+				</when>
+			</choose>	
+		) list
+		)
+	</select> 
+	<select id="getQnaDetail" parameterType="int" resultType="qna">
+		select *
+		from inquiry
+		where i_number = #{i_number}
+	</select>
+	<update id="whetherUpdate" parameterType="qna">
+		update inquiry set i_repwhether = #{i_repwhether}
+		where i_number = #{i_number}
+	</update>
+</mapper>

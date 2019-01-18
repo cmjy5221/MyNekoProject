@@ -1,0 +1,239 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+	<definition name="/admin" template="/WEB-INF/views/template/admin/contentLayout.jsp">
+		<put-attribute name="title" value="우리집 고양이" />
+		<put-attribute name="header" value="/WEB-INF/views/template/admin/header.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/template/admin/footer.jsp" />
+		<put-attribute name="main" value="" />
+	</definition>
+	<definition template="/WEB-INF/views/template/client/mainLayout.jsp" name="base">
+		<put-attribute name="title" value="우리집 고양이"/>
+		<put-attribute name="header" value="/WEB-INF/views/template/client/header.jsp"/>
+		<put-attribute name="body" value=""/>
+		<put-attribute name="footer" value="/WEB-INF/views/template/client/footer.jsp"/>
+	</definition>
+	<definition name="/member/login" extends="base">
+		<put-attribute name="title" value="로그인 페이지" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/client/member/login.jsp" />
+	</definition>
+	<definition name="/member/join" extends="base">
+		<put-attribute name="title" value="회원가입" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/client/member/join.jsp" />
+	</definition>
+	<definition name="/member/joinsuccess" extends="base">
+		<put-attribute name="body" value="/WEB-INF/views/client/member/joinsuccess.jsp" />
+	</definition>
+	<definition name="/member/terms" extends="base">
+		<put-attribute name="title" value="회원가입 약관동의" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/client/member/terms.jsp" />
+	</definition>
+	<definition name="/mdlist/allmdlist" extends="base">
+		<put-attribute name="body"
+			value="/WEB-INF/views/client/mdlist/allmdlist.jsp" />
+	</definition>
+	<definition name="/mdlist/forcustomerlist" extends="base">
+		<put-attribute name="body"
+			value="/WEB-INF/views/client/mdlist/forcustomerlist.jsp" />
+	</definition>
+	<definition name="/mdlist/mddetail" extends="base">
+		<put-attribute name="body"
+			value="/WEB-INF/views/client/mdlist/mddetail.jsp" />
+	</definition>
+	<definition name="catcare/catcareList" extends="base">
+		<put-attribute name="body" value="/WEB-INF/views/client/catcare/catcareList.jsp" />
+	</definition>
+	<definition name="/cat/catlist" extends="base">
+		<put-attribute name="body" value="/WEB-INF/views/client/cat/catlist.jsp" />
+	</definition>
+	<definition name="/cat/catinsert" extends="base">
+		<put-attribute name="body" value="/WEB-INF/views/client/cat/catinsert.jsp" />
+	</definition>
+	<definition name="/member/logout" extends="base">
+		<put-attribute name="body" value="/WEB-INF/views/client/member/logout.jsp" />
+	</definition>
+	<definition name="admin/order/adminOrder" extends="/admin">
+		<put-attribute name="main" value="/WEB-INF/views/admin/order/adminOrder.jsp"></put-attribute>
+	</definition>
+	<definition name="admin/cc/adminNoticeList" extends="/admin">
+		<put-attribute name="main" value="/WEB-INF/views/admin/cc/adminNoticeList.jsp"></put-attribute>
+	</definition>
+	<definition name="admin/cc/noticeRegForm" extends="/admin">
+		<put-attribute name="main" value="/WEB-INF/views/admin/cc/noticeRegForm.jsp"></put-attribute>
+	</definition>
+	<definition name="admin/cc/noticeDetail" extends="/admin">
+		<put-attribute name="main" value="/WEB-INF/views/admin/cc/noticeDetail.jsp"></put-attribute>
+	</definition>
+	<definition name="admin/cc/noticeModForm" extends="/admin">
+		<put-attribute name="main" value="/WEB-INF/views/admin/cc/noticeModForm.jsp"></put-attribute>
+	</definition>
+	<definition name="admin/cc/adminQnaList" extends="/admin">
+		<put-attribute name="main" value="/WEB-INF/views/admin/cc/adminQnaList.jsp"></put-attribute>
+	</definition>
+	<definition name="admin/cc/qnaDetail" extends="/admin">
+		<put-attribute name="main" value="/WEB-INF/views/admin/cc/adminQnaDetail.jsp"></put-attribute>
+	</definition>
+	<definition name="admin/cc/qnaReplyReg" extends="/admin">
+		<put-attribute name="main" value="/WEB-INF/views/admin/cc/qnaReplyReg.jsp"></put-attribute>
+	</definition>
+	<definition name="admin/cc/adminFaqList" extends="/admin">
+		<put-attribute name="main" value="/WEB-INF/views/admin/cc/adminFaqList.jsp"></put-attribute>
+	</definition>
+	<definition name="admin/cc/faqRegForm" extends="/admin">
+		<put-attribute name="main" value="/WEB-INF/views/admin/cc/faqRegForm.jsp"></put-attribute>
+	</definition>
+	<definition name="admin/cc/faqDetail" extends="/admin">
+		<put-attribute name="main" value="/WEB-INF/views/admin/cc/faqDetail.jsp"></put-attribute>
+	</definition>
+	<definition name="admin/cc/faqModForm" extends="/admin">
+		<put-attribute name="main" value="/WEB-INF/views/admin/cc/faqModForm.jsp"></put-attribute>
+	</definition>
+	<definition name="admin/stats/mStats" extends="/admin">
+		<put-attribute name="main" value="/WEB-INF/views/admin/stats/mStats.jsp"></put-attribute>
+	</definition>
+	<definition name="admin/stats/sStats" extends="/admin">
+		<put-attribute name="main" value="/WEB-INF/views/admin/stats/sStats.jsp"></put-attribute>
+	</definition>
+	<definition name="/admin/*/*" extends="/admin">
+		<put-attribute name="main" value="/WEB-INF/views/admin/{1}/{2}.jsp"></put-attribute>
+	</definition>
+	<definition name="admin/stats/salesStats" extends="/admin">
+		<put-attribute name="main" value="/WEB-INF/views/admin/stats/sStats.jsp"></put-attribute>
+	</definition>
+	<definition name="client/inquery/InqueryList" extends="base">
+		<put-attribute name="title" value="1:1문의 내역" />
+		<put-attribute name="body" value="/WEB-INF/views/client/inquery/InqueryList.jsp" />
+	</definition>
+	<definition name="client/review/reviewList" extends="base">
+		<put-attribute name="title" value="리뷰게시판" />
+		<put-attribute name="body" value="/WEB-INF/views/client/review/reviewList.jsp" />
+	</definition>
+	<definition name="client/review/reviewDetail" extends="base">
+		<put-attribute name="title" value="리뷰 상세보기" />
+		<put-attribute name="body" value="/WEB-INF/views/client/review/reviewDetail.jsp" />
+	</definition>
+	<definition name="client/review/updateForm" extends="base">
+		<put-attribute name="title" value="리뷰 수정" />
+		<put-attribute name="body" value="/WEB-INF/views/client/review/updateForm.jsp" />
+	</definition>
+	<definition name="client/notice/noticeList" extends="base">
+		<put-attribute name="title" value="공지사항 게시판" />
+		<put-attribute name="body" value="/WEB-INF/views/client/notice/noticeList.jsp" />
+	</definition>
+	<definition name="client/notice/noticeDetail" extends="base">
+		<put-attribute name="title" value="공지사항 상세보기" />
+		<put-attribute name="body" value="/WEB-INF/views/client/notice/noticeDetail.jsp" />
+	</definition>
+	<definition name="Faqboard/faqboard" extends="base">
+		<put-attribute name="title" value="FAQ 게시판" />
+		<put-attribute name="body" value="/WEB-INF/views/client/Faqboard/faqboard.jsp" />
+	</definition>
+	<definition name="Faqboard/faqboardviewdetails" extends="base">
+		<put-attribute name="title" value="FAQ 상세보기" />
+		<put-attribute name="body" value="/WEB-INF/views/client/Faqboard/faqboardviewdetails.jsp" />
+	</definition>
+	<definition name="catcare/catcareDetail" extends="base">
+		<put-attribute name="title" value="고양이 관리정보 상세보기" />
+		<put-attribute name="body" value="/WEB-INF/views/client/catcare/catcareDetail.jsp" />
+	</definition>
+	<definition name="client/boast/boastModify" extends="base">
+		<put-attribute name="title" value="반려묘 자랑 / 꿀팁공유 게시글 수정" />
+		<put-attribute name="body" value="/WEB-INF/views/client/boast/boastUpdateForm.jsp" />
+	</definition>
+	<definition name="client/boast/boastList" extends="base">
+		<put-attribute name="title" value="반려묘 자랑 / 꿀팁공유 게시판" />
+		<put-attribute name="body" value="/WEB-INF/views/client/boast/boastList.jsp" />
+	</definition>
+	<definition name="boast/writeBoast" extends="base">
+		<put-attribute name="title" value="반려묘 자랑 / 꿀팁공유 게시글 작성" />
+		<put-attribute name="body" value="/WEB-INF/views/client/boast/writeBoast.jsp" />
+	</definition>
+	<definition name="boast/boastDetail" extends="base">
+		<put-attribute name="title" value="반려묘 자랑 / 꿀팁공유 게시글 상세보기" />
+		<put-attribute name="body" value="/WEB-INF/views/client/boast/boastDetail.jsp" />
+	</definition>
+	<definition name="client/inquiry/inquiryList" extends="base">
+		<put-attribute name="title" value="1:1 문의내역" />
+		<put-attribute name="body" value="/WEB-INF/views/client/inquery/InqueryList.jsp"/>
+	</definition>
+	<definition name="client/inquiry/inquiryDetail" extends="base">
+		<put-attribute name="title" value="1:1 문의 상세보기" />
+		<put-attribute name="body" value="/WEB-INF/views/client/inquery/InqueryDetail.jsp" />
+	</definition>
+	<definition name="member/modifi" extends="base">
+		<put-attribute name="title" value="회원정보 수정" />
+		<put-attribute name="body" value="/WEB-INF/views/client/member/modifi.jsp" />
+	</definition>
+	<definition name="client/inquiry/inquiryWrite" extends="base">
+		<put-attribute name="title" value="1:1 문의하기" />
+		<put-attribute name="body" value="/WEB-INF/views/client/inquery/InqueryWriteForm.jsp" />
+	</definition>
+	<definition name="myorder/myorderList" extends="base">
+		<put-attribute name="title" value="나의 주문내역" />
+		<put-attribute name="body" value="/WEB-INF/views/client/myorder/myorderList.jsp" />
+	</definition>
+	<definition name="member/idselect" extends="base">
+		<put-attribute name="title" value="아이디 찾기" />
+		<put-attribute name="body" value="/WEB-INF/views/client/member/idselect.jsp" />
+	</definition>
+	<definition name="mail/id" extends="base">
+		<put-attribute name="title" value="아이디 찾기" />
+		<put-attribute name="body" value="/WEB-INF/views/client/mail/id.jsp" />
+	</definition>
+	<definition name="mail/password" extends="base">
+		<put-attribute name="title" value="비밀번호 찾기" />
+		<put-attribute name="body" value="/WEB-INF/views/client/mail/password.jsp" />
+	</definition>
+	<definition name="member/passwordmodifi" extends="base">
+		<put-attribute name="title" value="비밀번호 변경" />
+		<put-attribute name="body" value="/WEB-INF/views/client/member/passwordmodifi.jsp" />
+	</definition>
+	<definition name="cart/cartList" extends="base">
+		<put-attribute name="title" value="장바구니" />
+		<put-attribute name="body" value="/WEB-INF/views/client/cart/cartList.jsp" />
+	</definition>
+	<definition name="cart/payment" extends="base">
+		<put-attribute name="title" value="상품 결제" />
+		<put-attribute name="body" value="/WEB-INF/views/client/cart/payment.jsp" />
+	</definition>
+	<definition name="client/cart/paymentOne" extends="base">
+		<put-attribute name="title" value="상품 결제" />
+		<put-attribute name="body" value="/WEB-INF/views/client/cart/paymentOne.jsp" />
+	</definition>
+	<definition name="/myorder/myorderList" extends="base">
+		<put-attribute name="title" value="나의 주문내역" />
+		<put-attribute name="body" value="/WEB-INF/views/client/myorder/myorderList.jsp" />
+	</definition>
+	<definition name="myorder/myorderDetail" extends="base">
+		<put-attribute name="title" value="주문내역 상세보기" />
+		<put-attribute name="body" value="/WEB-INF/views/client/myorder/myorderDetail.jsp" />
+	</definition>
+	<definition name="/member/modifi" extends="base">
+		<put-attribute name="title" value="회원정보 변경" />
+		<put-attribute name='body' value="/WEB-INF/views/client/member/modifi.jsp" />
+	</definition>
+	<definition name="/cat/catdetail" extends="base">
+		<put-attribute name='title' value="반려묘 정보 상세보기" />
+		<put-attribute name='body' value="/WEB-INF/views/client/cat/catdetail.jsp" />
+	</definition>
+	<definition name="admin/cc/adminQnaDetail" extends="/admin">
+		<put-attribute name="title" value="1:1문의 상세보기" />
+		<put-attribute name="main" value="/WEB-INF/views/admin/cc/adminQnaDetail.jsp" />
+	</definition>
+	<definition name="cat/myorder/myorderList" extends="base">
+		<put-attribute name="title" value="나의 주문내역" />
+		<put-attribute name="body" value="/WEB-INF/views/client/cat/myorder/myorderList.jsp" />
+	</definition>
+	<definition name="review/reviewWriteForm" extends="base">
+		<put-attribute name="title" value="리뷰 작성" />
+		<put-attribute name="body" value="/WEB-INF/views/client/review/reviewWriteForm.jsp" />
+	</definition>
+	<definition name="admin/order/orderDetail" extends="/admin">
+		<put-attribute name="title" value="주문내역 상세보기" />
+		<put-attribute name="main" value="/WEB-INF/views/admin/order/orderDetail.jsp" />
+	</definition>
+</tiles-definitions>

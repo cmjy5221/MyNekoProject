@@ -1,0 +1,17 @@
+#detailContainer{
+	width: 840px;
+	margin: 0 auto;
+}
+
+#content{
+	width:840px;
+	height: 500px;
+	background-color: #ebeced;
+	padding: 20px;
+	overflow: auto; 
+}
+
+#fileImage{
+	width: 750px;
+	height: 450px;
+}
